@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>INSPYRE Meet</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #EBEBEB; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
+    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #EBEBEB; z-index: 9999; }
+    #__bundler_thumbnail svg { width: 100%; height: 100%; object-fit: contain; }
+    #__bundler_placeholder { color: #999; font-size: 14px; }
+  </style>
+  <noscript>
+    <style>#__bundler_loading { display: none; }</style>
+    <div style="position:fixed;bottom:12px;left:12px;font:13px/1.4 -apple-system,BlinkMacSystemFont,sans-serif;color:#999;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,0.08);z-index:10000;">
+      This page requires JavaScript to display.
+    </div>
+  </noscript>
+</head>
+<body>
+  <div id="__bundler_thumbnail">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#EBEBEB"></rect>
+    <g fill="none" stroke="#000" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" transform="translate(440 220) scale(8)">
+      <path d="M6 22 C 8 14, 14 14, 14 20 S 20 26, 22 18"></path>
+      <path d="M10 28 C 14 24, 18 24, 22 28"></path>
+      <path d="M16 8 C 20 10, 22 14, 20 18"></path>
+      <path d="M26 10 C 30 14, 30 20, 26 24"></path>
+    </g>
+    <text x="600" y="720" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="44" letter-spacing="14" fill="#000">INSPYRE / MEET</text>
+  </svg>
+</div>
+  <div id="__bundler_loading">Unpacking...</div>
+
+  <script>
+    
+document.addEventListener('DOMContentLoaded', async function() {
+  const loading = document.getElementById('__bundler_loading');
+  function setStatus(msg) { if (loading) loading.textContent = msg; }
+
+  // Error sink persists across replaceWith since it's on window, not the DOM.
+  window.addEventListener('error', function(e) {
+    var p = document.body || document.documentElement;
+    var d = document.getElementById('__bundler_err') || p.appendChild(document.createElement('div'));
+    d.id = '__bundler_err';
+    d.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;font:12px/1.4 ui-monospace,monospace;background:#2a1215;color:#ff8a80;padding:10px 14px;border-radius:8px;border:1px solid #5c2b2e;z-index:99999;white-space:pre-wrap;max-height:40vh;overflow:auto';
+    d.textContent = (d.textContent ? d.textContent + String.fromCharCode(10) : '') +
+      '[bundle] ' + (e.message || e.type) +
+      (e.filename ? ' (' + e.filename.slice(0, 60) + ':' + e.lineno + ')' : '');
+  }, true);
+
+  try {
+    const manifestEl = document.querySelector('script[type="__bundler/manifest"]');
+    const templateEl = document.querySelector('script[type="__bundler/template"]');
+    if (!manifestEl || !templateEl) {
+      setStatus('Error: missing bundle data');
+      console.error('[bundler] Missing script tags — manifestEl:', !!manifestEl, 'templateEl:', !!templateEl);
+      return;
+    }
+
+    const manifest = JSON.parse(manifestEl.textContent);
+    let template = JSON.parse(templateEl.textContent);
+
+    const uuids = Object.keys(manifest);
+    setStatus('Unpacking ' + uuids.length + ' assets...');
+
+    const blobUrls = {};
+    await Promise.all(uuids.map(async (uuid) => {
+      const entry = manifest[uuid];
+      try {
+        const binaryStr = atob(entry.data);
+        const bytes = new Uint8Array(binaryStr.length);
+        for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+
+        let finalBytes = bytes;
+        if (entry.compressed) {
+          if (typeof DecompressionStream !== 'undefined') {
+            const ds = new DecompressionStream('gzip');
+            const writer = ds.writable.getWriter();
+            const reader = ds.readable.getReader();
+            writer.write(bytes);
+            writer.close();
+            const chunks = [];
+            let totalLen = 0;
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              chunks.push(value);
+              totalLen += value.length;
+            }
+            finalBytes = new Uint8Array(totalLen);
+            let offset = 0;
+            for (const chunk of chunks) { finalBytes.set(chunk, offset); offset += chunk.length; }
+          } else {
+            console.warn('DecompressionStream not available, asset ' + uuid + ' may not render');
+          }
+        }
+
+        blobUrls[uuid] = URL.createObjectURL(new Blob([finalBytes], { type: entry.mime }));
+      } catch (err) {
+        console.error('Failed to decode asset ' + uuid + ':', err);
+        blobUrls[uuid] = URL.createObjectURL(new Blob([], { type: entry.mime }));
+      }
+    }));
+
+    const extResEl = document.querySelector('script[type="__bundler/ext_resources"]');
+    const extResources = extResEl ? JSON.parse(extResEl.textContent) : [];
+    const resourceMap = {};
+    for (const entry of extResources) {
+      if (blobUrls[entry.uuid]) resourceMap[entry.id] = blobUrls[entry.uuid];
+    }
+
+    setStatus('Rendering...');
+    for (const uuid of uuids) template = template.split(uuid).join(blobUrls[uuid]);
+
+    // Strip integrity + crossorigin — blob URLs from a file:// document inherit
+    // a null origin, so crossorigin forces a CORS fetch that SRI then rejects.
+    // The manifest bytes are ours; SRI protects against CDN compromise, not this.
+    template = template.replace(/\s+integrity="[^"]*"/gi, '').replace(/\s+crossorigin="[^"]*"/gi, '');
+
+    const resourceScript = '<script>window.__resources = ' +
+      JSON.stringify(resourceMap).split('</' + 'script>').join('<\\/' + 'script>') +
+      ';</' + 'script>';
+    // Inject after <head> so the DOCTYPE stays first; prepending the script
+    // would push the parser into quirks mode. DOMParser always emits a <head>
+    // (synthesizing one if the source HTML omitted it) but may carry
+    // attributes through, so match the full opening tag. slice() rather than
+    // replace() keeps us clear of $-pattern substitution in resourceScript.
+    const headOpen = template.match(/<head[^>]*>/i);
+    if (headOpen) {
+      const i = headOpen.index + headOpen[0].length;
+      template = template.slice(0, i) + resourceScript + template.slice(i);
+    }
+
+    // Parse the template and swap the root element. Scripts inserted via
+    // DOMParser/replaceWith are inert per spec — re-create each with
+    // createElement so they execute, awaiting onload for src scripts to
+    // preserve ordering (React before ReactDOM before Babel before text/babel).
+    const doc = new DOMParser().parseFromString(template, 'text/html');
+    document.documentElement.replaceWith(doc.documentElement);
+    const dead = Array.from(document.scripts);
+    for (const old of dead) {
+      const s = document.createElement('script');
+      for (const a of old.attributes) s.setAttribute(a.name, a.value);
+      s.textContent = old.textContent;
+      // text/babel scripts with a src: fetch and inline. transformScriptTags
+      // does XHR against the src, but blob:null/ from a file:// origin is
+      // silently dropped. Inlining makes it a plain inline babel script,
+      // which transformScriptTags handles unconditionally.
+      if ((s.type === 'text/babel' || s.type === 'text/jsx') && s.src) {
+        const r = await fetch(s.src);
+        s.textContent = await r.text();
+        s.removeAttribute('src');
+      }
+      const p = s.src ? new Promise(function(r) { s.onload = s.onerror = r; }) : null;
+      old.replaceWith(s);
+      if (p) await p;
+    }
+    // Babel standalone auto-transforms type=text/babel on DOMContentLoaded,
+    // which fired before we swapped the document. Trigger manually if present.
+    if (window.Babel && typeof window.Babel.transformScriptTags === 'function') {
+      window.Babel.transformScriptTags();
+    }
+  } catch (err) {
+    setStatus('Error unpacking: ' + err.message);
+    console.error('Bundle unpack error:', err);
+  }
+});
+
+  </script>
+
+  <script type="__bundler/manifest">
+{}
+  </script>
+
+  <script type="__bundler/ext_resources">
+[]
+  </script>
+
+  <script type="__bundler/template">
+"<!DOCTYPE html>\n<html lang=\"en\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>INSPYRE Meet<\u002Ftitle>\n\n\n<style>\n  :root{\n    --ink:#000;--paper:#EBEBEB;--paper-soft:#F2F2F2;--white:#fff;\n    --ink-60:#5A5A5A;--ink-40:#9A9A9A;--ink-20:#C9C9C9;--ink-10:#DCDCDC;\n    --font:\"General Sans\",\"Söhne\",\"Aktiv Grotesk\",-apple-system,system-ui,sans-serif;\n  }\n  *{box-sizing:border-box;margin:0;padding:0}\n  html,body{background:var(--paper);color:var(--ink);font-family:var(--font);font-weight:400;-webkit-font-smoothing:antialiased}\n  body{min-height:100vh;display:flex;flex-direction:column}\n  a{color:inherit;text-decoration:none}\n  button{font:inherit}\n\n  .nav{display:flex;align-items:center;justify-content:space-between;padding:32px 64px}\n  .brand{display:flex;align-items:center;gap:14px}\n  .brand .mono{width:36px;height:36px}\n  .brand .word{font-size:14px;letter-spacing:0.32em;font-weight:500}\n  .brand .word .sub{color:var(--ink-60);margin-left:14px}\n  .nav-links{display:flex;gap:40px;font-size:15px}\n  .nav-links a{opacity:.85}\n  .nav-links a:hover{opacity:1}\n\n  .hero{flex:1;display:grid;grid-template-columns:1.05fr 1fr;gap:48px;padding:24px 64px 48px;align-items:center}\n  .hero-left{padding-top:8px;padding-bottom:24px}\n  .eyebrow{font-size:13px;letter-spacing:.08em;color:var(--ink-60);margin-bottom:28px;display:flex;align-items:center;gap:10px}\n  .eyebrow::before{content:\"\";width:6px;height:6px;border:1px solid var(--ink-60);border-radius:50%}\n\n  h1{font-size:clamp(56px,7.4vw,112px);line-height:.95;letter-spacing:-.02em;font-weight:400}\n  h1 em{font-style:italic;font-weight:500}\n  .tagline{margin-top:24px;font-size:22px;line-height:1.4;color:var(--ink-60);max-width:540px}\n  .tagline b{color:var(--ink);font-weight:500}\n\n  .form{margin-top:40px;background:var(--white);border:1px solid var(--ink-20);padding:14px 14px 14px 24px;display:flex;align-items:center;gap:16px;max-width:560px}\n  .form input{flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:18px;color:var(--ink);padding:14px 0}\n  .form input::placeholder{color:var(--ink-40)}\n  .cta{width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--white);border:0;cursor:pointer;display:grid;place-items:center;flex:0 0 56px;transition:transform .25s cubic-bezier(.2,.8,.2,1)}\n  .cta:hover{transform:translateX(3px)}\n\n  .form-row{display:flex;gap:24px;margin-top:14px;font-size:13px;color:var(--ink-60);align-items:center;flex-wrap:wrap}\n  .dot-link{display:flex;align-items:center;gap:8px;background:none;border:0;color:inherit;cursor:pointer;padding:6px 0;font-size:13px}\n  .dot-link::before{content:\"\";width:6px;height:6px;border:1px solid currentColor;border-radius:50%}\n  .dot-link:hover{color:var(--ink)}\n\n  /* Right column hero imagery — three variants ---------------------- */\n  .hero-right{position:relative;height:620px;display:flex;align-items:center;justify-content:center}\n  .imagery{position:relative;width:100%;height:100%;background:var(--paper-soft);overflow:hidden}\n  .imagery::before{content:\"\";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(0,0,0,.035) 14px 15px);pointer-events:none}\n  .imagery .label{position:absolute;left:20px;bottom:16px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--ink-60);letter-spacing:.04em;z-index:5}\n\n  /* H1 — \"meet.\" giant glyph + pearl + tube */\n  .h-meet .glyph{position:absolute;font-size:480px;line-height:.78;color:var(--ink);font-weight:400;letter-spacing:-.04em;top:-20px;left:-20px;user-select:none}\n  .h-meet .pearl{position:absolute;right:60px;top:140px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d8d8d8 55%,#1a1a1a 95%);box-shadow:0 24px 48px rgba(0,0,0,.18),inset -10px -16px 30px rgba(0,0,0,.35)}\n  .h-meet .tube{position:absolute;right:-40px;bottom:80px;width:340px;height:80px;border-radius:80px;background:radial-gradient(ellipse at center,rgba(255,255,255,.6),transparent 70%),repeating-radial-gradient(circle at 30% 50%,rgba(0,0,0,.6) 0 1px,transparent 1px 3px);transform:rotate(-18deg);border:1px solid rgba(0,0,0,.08)}\n\n  /* H2 — outlined \"hello.\" + tube arc + scattered dots */\n  .h-hello .glyph{position:absolute;font-size:300px;line-height:.78;letter-spacing:-.04em;top:90px;left:30px;color:transparent;-webkit-text-stroke:1.5px var(--ink);font-weight:400}\n  .h-hello .arc{position:absolute;left:-10%;top:55%;width:130%;height:80px;border-radius:80px;transform:rotate(-8deg);background:radial-gradient(ellipse at center,rgba(0,0,0,.04),transparent 70%),repeating-radial-gradient(circle at 30% 50%,rgba(0,0,0,.55) 0 1px,transparent 1px 4px);border:1px solid rgba(0,0,0,.08)}\n  .h-hello .dot{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cdcdcd 55%,#0e0e0e 95%);box-shadow:0 12px 24px rgba(0,0,0,.18)}\n  .h-hello .d1{width:64px;height:64px;right:80px;top:60px}\n  .h-hello .d2{width:36px;height:36px;right:200px;bottom:120px}\n  .h-hello .d3{width:22px;height:22px;left:60px;bottom:60px}\n\n  /* H3 — monogram poster with grit */\n  .h-mono{background:var(--ink) !important}\n  .h-mono::before{background:radial-gradient(1.2px 1.2px at 12% 18%,#fff 100%,transparent),radial-gradient(1px 1px at 80% 30%,#fff 100%,transparent),radial-gradient(1.4px 1.4px at 60% 70%,#fff 100%,transparent),radial-gradient(.8px .8px at 25% 80%,#fff 100%,transparent),radial-gradient(1px 1px at 90% 65%,#fff 100%,transparent),radial-gradient(.8px .8px at 45% 22%,#fff 100%,transparent),radial-gradient(1px 1px at 70% 12%,#fff 100%,transparent);opacity:.6}\n  .h-mono .label{color:rgba(255,255,255,.4)}\n  .h-mono svg{position:absolute;inset:0;width:100%;height:100%;padding:60px}\n  .h-mono .word{position:absolute;left:24px;top:24px;color:#fff;font-size:13px;letter-spacing:.32em;font-weight:500}\n\n  /* Plate */\n  .plate{background:var(--ink);color:var(--white);margin:0 64px 48px;padding:64px;text-align:center}\n  .plate p{font-size:clamp(20px,2vw,26px);line-height:1.45;max-width:880px;margin:0 auto}\n  .services{margin-top:48px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 28px;color:var(--white);font-size:15px}\n  .services span{display:flex;align-items:center;gap:24px}\n  .services span:not(:last-child)::after{content:\"\";width:5px;height:5px;background:var(--white);border-radius:50%}\n\n  footer{padding:24px 64px;display:flex;justify-content:space-between;align-items:center;color:var(--ink-60);font-size:13px}\n  footer a{color:var(--ink)}\n\n  /* Modal ----------------------------------------------------------- */\n  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:50;padding:32px}\n  .scrim.open{display:flex}\n  .modal{background:var(--paper);width:min(720px,100%);max-height:90vh;overflow:auto;border:1px solid var(--ink-20);position:relative}\n  .modal-head{display:flex;align-items:flex-end;justify-content:space-between;padding:32px 40px 20px;border-bottom:1px solid var(--ink-20)}\n  .modal-head h2{font-size:40px;letter-spacing:-.015em;font-weight:400;line-height:1}\n  .modal-head .meta{font-size:13px;letter-spacing:.08em;color:var(--ink-60);margin-bottom:6px}\n  .close{width:40px;height:40px;border-radius:50%;border:1px solid var(--ink-20);background:transparent;cursor:pointer;display:grid;place-items:center}\n  .close:hover{background:var(--white)}\n  .body{padding:24px 40px}\n  .field{display:grid;grid-template-columns:1fr 1.2fr;gap:24px;align-items:center;padding:18px 0;border-bottom:1px solid var(--ink-10)}\n  .field:last-of-type{border:0}\n  .field .lbl{font-size:15px;color:var(--ink)}\n  .field .lbl small{display:block;font-size:12px;color:var(--ink-60);margin-top:4px;font-weight:400}\n  .text-input{background:var(--white);border:1px solid var(--ink-20);padding:12px 14px;font:inherit;font-size:15px;color:var(--ink);width:100%}\n  .text-input:focus{outline:0;border-color:var(--ink)}\n  .toggle{position:relative;width:52px;height:28px;background:var(--ink-20);border-radius:28px;cursor:pointer;transition:background .2s;justify-self:end}\n  .toggle::after{content:\"\";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s cubic-bezier(.2,.8,.2,1)}\n  .toggle.on{background:var(--ink)}\n  .toggle.on::after{left:27px}\n  .slider-row{display:flex;align-items:center;gap:14px;justify-self:end;width:100%;max-width:280px}\n  .slider-row input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:2px;background:var(--ink-20);outline:0}\n  .slider-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--ink);cursor:pointer}\n  .slider-row input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--ink);cursor:pointer;border:0}\n  .slider-row .val{font-variant-numeric:tabular-nums;font-size:15px;min-width:24px;text-align:right}\n  .modal-foot{display:flex;justify-content:space-between;align-items:center;padding:24px 40px 32px;border-top:1px solid var(--ink-20);background:var(--paper-soft)}\n  .modal-foot .secondary{display:flex;gap:24px}\n  .save{display:flex;align-items:center;gap:14px;background:var(--ink);color:#fff;border:0;padding:8px 8px 8px 24px;border-radius:48px;cursor:pointer;font-size:15px}\n  .save .arrow{width:40px;height:40px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center}\n<\u002Fstyle>\n<\u002Fhead>\n<body>\n\n<nav class=\"nav\">\n  <a class=\"brand\" href=\"#\" aria-label=\"INSPYRE\">\n    <svg class=\"mono\" viewBox=\"0 0 36 36\" aria-hidden=\"true\">\n      <g fill=\"none\" stroke=\"#000\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n        <path d=\"M6 22 C 8 14, 14 14, 14 20 S 20 26, 22 18\"><\u002Fpath>\n        <path d=\"M10 28 C 14 24, 18 24, 22 28\"><\u002Fpath>\n        <path d=\"M16 8 C 20 10, 22 14, 20 18\"><\u002Fpath>\n        <path d=\"M26 10 C 30 14, 30 20, 26 24\"><\u002Fpath>\n      <\u002Fg>\n    <\u002Fsvg>\n    <span class=\"word\">INSPYRE<span class=\"sub\">/ MEET<\u002Fspan><\u002Fspan>\n  <\u002Fa>\n  <div class=\"nav-links\">\n    <a href=\"#\">About<\u002Fa>\n    <a href=\"https://github.com/miroslavpejic85/mirotalk\" target=\"_blank\" rel=\"noopener\">Source<\u002Fa>\n    <a href=\"https://inspyre.it\" target=\"_blank\" rel=\"noopener\">inspyre.it<\u002Fa>\n  <\u002Fdiv>\n<\u002Fnav>\n\n<section class=\"hero\">\n  <div class=\"hero-left\">\n    <div class=\"eyebrow\">video meetings · self-hosted by INSPYRE<\u002Fdiv>\n    <h1>INSPYRE <em>Meet.<\u002Fem><br>It's cozy here,<br>stay awhile.<\u002Fh1>\n    <p class=\"tagline\">A quiet corner of the internet where the team — and the people we'd love to meet — drop in for a chat.<\u002Fp>\n\n    <form class=\"form\" onsubmit=\"event.preventDefault(); go()\">\n      <input id=\"room\" type=\"text\" placeholder=\"room name — e.g. quiet-pearl-42\" autocomplete=\"off\">\n      <button class=\"cta\" type=\"submit\" aria-label=\"Start meeting\">\n        <svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n          <path d=\"M5 12h14\"><\u002Fpath><path d=\"m13 6 6 6-6 6\"><\u002Fpath>\n        <\u002Fsvg>\n      <\u002Fbutton>\n    <\u002Fform>\n\n    <div class=\"form-row\">\n      <button class=\"dot-link\" type=\"button\" onclick=\"randomize()\">randomize<\u002Fbutton>\n      <button class=\"dot-link\" type=\"button\" onclick=\"openModal()\">customize room<\u002Fbutton>\n      <button class=\"dot-link\" type=\"button\">join with code<\u002Fbutton>\n    <\u002Fdiv>\n  <\u002Fdiv>\n\n  <aside class=\"hero-right\">\n    <div class=\"imagery h-hello\" id=\"hero\" role=\"img\" aria-label=\"Brand placeholder — replace with hero render\">\n      <div class=\"glyph\">hello.<\u002Fdiv>\n      <div class=\"arc\"><\u002Fdiv>\n      <div class=\"dot d1\"><\u002Fdiv>\n      <div class=\"dot d2\"><\u002Fdiv>\n      <div class=\"dot d3\"><\u002Fdiv>\n      <div class=\"label\">[ replace with brand hero render ]<\u002Fdiv>\n    <\u002Fdiv>\n  <\u002Faside>\n<\u002Fsection>\n\n<section class=\"plate\">\n  <p>We are pioneers with the vision to better solve human problems with the help of digital solutions.<\u002Fp>\n  <div class=\"services\">\n    <span>software development<\u002Fspan><span>app development<\u002Fspan>\n    <span>ui, ux design<\u002Fspan><span>cds services<\u002Fspan>\n    <span>IT consulting<\u002Fspan><span>web3 development<\u002Fspan>\n  <\u002Fdiv>\n<\u002Fsection>\n\n<footer>\n  <span>©2026 INSPYRE. All rights reserved.<\u002Fspan>\n  <span>powered by <a href=\"https://github.com/miroslavpejic85/mirotalk\" target=\"_blank\" rel=\"noopener\">MiroTalk<\u002Fa> · <a href=\"mailto:hello@inspyre.it\">hello@inspyre.it<\u002Fa><\u002Fspan>\n<\u002Ffooter>\n\n<!-- Modal -->\n<div class=\"scrim\" id=\"scrim\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"mtitle\">\n  <div class=\"modal\">\n    <div class=\"modal-head\">\n      <div>\n        <div class=\"meta\">customize room<\u002Fdiv>\n        <h2 id=\"mtitle\">A few cozy preferences.<\u002Fh2>\n      <\u002Fdiv>\n      <button class=\"close\" onclick=\"closeModal()\" aria-label=\"Close\">\n        <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#000\" stroke-width=\"1.6\" stroke-linecap=\"round\"><path d=\"M6 6 18 18 M18 6 6 18\"><\u002Fpath><\u002Fsvg>\n      <\u002Fbutton>\n    <\u002Fdiv>\n\n    <div class=\"body\">\n      <div class=\"field\">\n        <div class=\"lbl\">Your display name<small>What others will see in the room.<\u002Fsmall><\u002Fdiv>\n        <input class=\"text-input\" type=\"text\" placeholder=\"e.g. Péter from INSPYRE\" value=\"\">\n      <\u002Fdiv>\n\n      <div class=\"field\">\n        <div class=\"lbl\">Room password<small>Optional. Leave blank for an open room.<\u002Fsmall><\u002Fdiv>\n        <input class=\"text-input\" type=\"text\" placeholder=\"••••••••\" value=\"\">\n      <\u002Fdiv>\n\n      <div class=\"field\">\n        <div class=\"lbl\">Lobby (waiting room)<small>You approve each guest before they enter.<\u002Fsmall><\u002Fdiv>\n        <div class=\"toggle on\" onclick=\"this.classList.toggle('on')\" role=\"switch\" aria-checked=\"true\"><\u002Fdiv>\n      <\u002Fdiv>\n\n      <div class=\"field\">\n        <div class=\"lbl\">End-to-end encryption<small>Media is encrypted between participants.<\u002Fsmall><\u002Fdiv>\n        <div class=\"toggle on\" onclick=\"this.classList.toggle('on')\" role=\"switch\" aria-checked=\"true\"><\u002Fdiv>\n      <\u002Fdiv>\n\n      <div class=\"field\">\n        <div class=\"lbl\">Allow chat<small>Text messages alongside the call.<\u002Fsmall><\u002Fdiv>\n        <div class=\"toggle on\" onclick=\"this.classList.toggle('on')\" role=\"switch\" aria-checked=\"true\"><\u002Fdiv>\n      <\u002Fdiv>\n\n      <div class=\"field\">\n        <div class=\"lbl\">Allow screen share<small>Anyone in the room can present.<\u002Fsmall><\u002Fdiv>\n        <div class=\"toggle on\" onclick=\"this.classList.toggle('on')\" role=\"switch\" aria-checked=\"true\"><\u002Fdiv>\n      <\u002Fdiv>\n\n      <div class=\"field\">\n        <div class=\"lbl\">Allow recording<small>Save a local copy of the meeting.<\u002Fsmall><\u002Fdiv>\n        <div class=\"toggle\" onclick=\"this.classList.toggle('on')\" role=\"switch\" aria-checked=\"false\"><\u002Fdiv>\n      <\u002Fdiv>\n\n      <div class=\"field\">\n        <div class=\"lbl\">Whiteboard<small>Shared canvas for sketching together.<\u002Fsmall><\u002Fdiv>\n        <div class=\"toggle on\" onclick=\"this.classList.toggle('on')\" role=\"switch\" aria-checked=\"true\"><\u002Fdiv>\n      <\u002Fdiv>\n\n      <div class=\"field\">\n        <div class=\"lbl\">Max participants<small>Cap the size of the room.<\u002Fsmall><\u002Fdiv>\n        <div class=\"slider-row\">\n          <input type=\"range\" min=\"2\" max=\"50\" value=\"12\" oninput=\"this.nextElementSibling.textContent=this.value\">\n          <span class=\"val\">12<\u002Fspan>\n        <\u002Fdiv>\n      <\u002Fdiv>\n    <\u002Fdiv>\n\n    <div class=\"modal-foot\">\n      <div class=\"secondary\">\n        <button class=\"dot-link\" type=\"button\" onclick=\"closeModal()\">cancel<\u002Fbutton>\n        <button class=\"dot-link\" type=\"button\">reset to defaults<\u002Fbutton>\n      <\u002Fdiv>\n      <button class=\"save\" onclick=\"closeModal()\">\n        save &amp; start\n        <span class=\"arrow\">\n          <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"><\u002Fpath><path d=\"m13 6 6 6-6 6\"><\u002Fpath><\u002Fsvg>\n        <\u002Fspan>\n      <\u002Fbutton>\n    <\u002Fdiv>\n  <\u002Fdiv>\n<\u002Fdiv>\n\n<script>\n  const A=[\"quiet\",\"bright\",\"crystal\",\"silver\",\"velvet\",\"slow\",\"golden\",\"still\",\"midnight\",\"calm\"];\n  const N=[\"pearl\",\"tube\",\"spark\",\"hand\",\"wave\",\"orbit\",\"grain\",\"tide\",\"ember\",\"mirror\"];\n  const rnd=a=>a[Math.floor(Math.random()*a.length)];\n  function randomize(){document.getElementById(\"room\").value=`${rnd(A)}-${rnd(N)}-${Math.floor(10+Math.random()*89)}`}\n  function go(){const v=document.getElementById(\"room\").value.trim()||(randomize(),document.getElementById(\"room\").value);alert(\"Joining room: \"+v)}\n  function openModal(){document.getElementById(\"scrim\").classList.add(\"open\")}\n  function closeModal(){document.getElementById(\"scrim\").classList.remove(\"open\")}\n\n  // Open modal automatically with ?modal=1 (for previewing)\n  if(new URLSearchParams(location.search).get(\"modal\")===\"1\") openModal();\n<\u002Fscript>\n\n\n\n<\u002Fbody><\u002Fhtml>"
+  </script>
+</body>
+</html>
