@@ -832,41 +832,5 @@
         <script defer src="../js/brand.js"></script>
         <script defer src="../js/landing.js"></script>
         <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-        <script>
-            const A = ['quiet', 'bright', 'crystal', 'silver', 'velvet', 'slow', 'golden', 'still', 'midnight', 'calm'];
-            const N = ['pearl', 'tube', 'spark', 'hand', 'wave', 'orbit', 'grain', 'tide', 'ember', 'mirror'];
-            const rnd = (a) => a[Math.floor(Math.random() * a.length)];
-            function randomize() {
-                document.getElementById('room').value = `${rnd(A)}-${rnd(N)}-${Math.floor(10 + Math.random() * 89)}`;
-            }
-            function go() {
-                const v =
-                    document.getElementById('room').value.trim() ||
-                    (randomize(), document.getElementById('room').value);
-                alert('Joining room: ' + v);
-            }
-            function openModal() {
-                document.getElementById('scrim').classList.add('open');
-            }
-            function closeModal() {
-                document.getElementById('scrim').classList.remove('open');
-            }
-
-            // Hero variants — switch via ?hero=meet|hello|mono
-            const params = new URLSearchParams(location.search);
-            const hero = params.get('hero') || 'meet';
-            const el = document.getElementById('hero');
-            el.classList.remove('h-meet');
-            el.classList.add('h-' + hero);
-            if (hero === 'hello') {
-                el.innerHTML =
-                    '<div class="glyph">hello.</div><div class="arc"></div><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div><div class="label">[ replace with brand hero render ]</div>';
-            } else if (hero === 'mono') {
-                el.innerHTML =
-                    '<div class="word">INSPYRE / MEET</div><svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet"><g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity=".95"><path d="M30 120 C 50 60, 90 60, 95 100 S 130 150, 150 90"/><path d="M50 160 C 80 130, 120 130, 160 160"/><path d="M85 30 C 110 50, 130 75, 115 100"/><path d="M150 40 C 180 75, 175 120, 145 145"/></g></svg><div class="label">[ replace with brand hero render ]</div>';
-            }
-            if (params.get('modal') === '1') openModal();
-        </script>
     </body>
 </html>
