@@ -629,14 +629,6 @@
                     A quiet corner of the internet where the team — and the people we'd love to meet — drop in for a
                     chat.
                 </p>
-
-                <!--
-                onsubmit="
-                    event.preventDefault();
-                    go();
-                "
-                -->
-
                 <form class="form">
                     <input id="roomName" type="text" placeholder="room name — e.g. quiet-pearl-42" autocomplete="off" />
                     <button id="joinRoomButton" class="cta" type="submit" aria-label="Start meeting">
@@ -657,11 +649,8 @@
                 </form>
 
                 <div class="form-row">
-                    <!-- onclick="randomize()" -->
                     <button class="dot-link" type="button" id="genRoomButton">randomize</button>
                     <button class="dot-link" type="button" id="customizeRoomButton">customize room</button>
-                    <!-- onclick="openModal()" -->
-                    <!--<button class="dot-link" type="button">join with code</button>-->
                     <p class="dot-link">last room: <span id="lastRoomContainer"></span></p>
                 </div>
             </div>
