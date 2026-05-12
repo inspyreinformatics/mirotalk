@@ -1,9 +1,9 @@
 /*
  ██████ ██      ██ ███████ ███    ██ ████████ 
 ██      ██      ██ ██      ████   ██    ██    
-██      ██      ██ █████   ██ ██  ██    ██    
-██      ██      ██ ██      ██  ██ ██    ██    
- ██████ ███████ ██ ███████ ██   ████    ██   
+██      ██      ██ █████   ██ ██  ██    ██ 
+██      ██      ██ ██      ██  ██ ██    ██ 
+ ██████ ███████ ██ ███████ ██   ████    ██ 
 */
 
 /**
@@ -4006,7 +4006,7 @@ async function setupLocalAudioMedia() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia(audioConstraints);
         if (stream) {
-            /* 
+            /*
                 Verify the audio track is live – on some mobile devices getUserMedia
                 succeeds but the track is muted/ended (e.g. built-in mic restrictions).
             */
@@ -4090,7 +4090,7 @@ function handleMediaError(mediaType, err) {
     msgHTML(null, images.forbidden, 'Access denied', $html, 'center', '/');
 
     /*
-        it immediately stops the execution of the current function and jumps to the nearest enclosing try...catch block or, 
+        it immediately stops the execution of the current function and jumps to the nearest enclosing try...catch block or,
         if none exists, it interrupts the script execution and displays an error message in the console.
     */
     throw new Error(
@@ -5378,31 +5378,31 @@ function genAvatarSvg(peerName, avatarImgSize) {
     const bgColor = `rgb(${red}, ${green}, ${blue})`;
     const textColor = '#ffffff';
     const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    width="${avatarImgSize}px" 
-    height="${avatarImgSize}px" 
-    viewBox="0 0 ${avatarImgSize} ${avatarImgSize}" 
+    <svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="${avatarImgSize}px"
+    height="${avatarImgSize}px"
+    viewBox="0 0 ${avatarImgSize} ${avatarImgSize}"
     version="1.1">
-        <circle 
-            fill="${bgColor}" 
-            width="${avatarImgSize}" 
-            height="${avatarImgSize}" 
-            cx="${avatarImgSize / 2}" 
-            cy="${avatarImgSize / 2}" 
+        <circle
+            fill="${bgColor}"
+            width="${avatarImgSize}"
+            height="${avatarImgSize}"
+            cx="${avatarImgSize / 2}"
+            cy="${avatarImgSize / 2}"
             r="${avatarImgSize / 2}"/>
-        <text 
-            x="50%" 
-            y="50%" 
+        <text
+            x="50%"
+            y="50%"
             style="color:${textColor};
             line-height:1;
-            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif" 
-            alignment-baseline="middle" 
-            text-anchor="middle" 
-            font-size="${Math.round(avatarImgSize * 0.4)}" 
-            font-weight="normal" 
-            dy=".1em" 
-            dominant-baseline="middle" 
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"
+            alignment-baseline="middle"
+            text-anchor="middle"
+            font-size="${Math.round(avatarImgSize * 0.4)}"
+            font-weight="normal"
+            dy=".1em"
+            dominant-baseline="middle"
             fill="${textColor}">${peerName.substring(0, 2).toUpperCase()}
         </text>
     </svg>`;
@@ -8128,7 +8128,7 @@ function getAudioConstraints(deviceId = null) {
         autoGainControl: isMobileDevice ? { ideal: true } : true,
         noiseSuppression: useBuiltInNoiseSuppression,
     };
-    /* 
+    /*
     deviceId handling is platform-dependent:
         - iOS Safari: routing is OS-controlled; ignore deviceId.
         - Mobile (Android): best-effort with `ideal`.
@@ -8432,7 +8432,7 @@ async function shareRoomUrl() {
             /*
             This feature is available only in secure contexts (HTTPS),
             in some or all supporting browsers and mobile devices
-            console.error("navigator.share", err); 
+            console.error("navigator.share", err);
             */
             console.error('Navigator share error', err);
 
@@ -10902,7 +10902,7 @@ function appendMessage(from, img, side, msg, privateMsg, msgId = null, to = '') 
                 ></button>
                 <button
                     id="msg-copy-${chatMessagesId}"
-                    class="${className.copy}" 
+                    class="${className.copy}"
                     style="color:#fff; border:none; background:transparent;"
                     onclick="copyToClipboard('message-${chatMessagesId}')"
                 ></button>`;
@@ -10917,7 +10917,7 @@ function appendMessage(from, img, side, msg, privateMsg, msgId = null, to = '') 
         messageActionsHTML += `
                 <button
                     id="msg-speech-${chatMessagesId}"
-                    class="${className.speech}" 
+                    class="${className.speech}"
                     style="color:#fff; border:none; background:transparent;"
                     onclick="speechElementText(false, '${getFrom}', 'message-${chatMessagesId}')"
                 ></button>`;
@@ -15282,8 +15282,8 @@ function sendFileInformations(file, peer_id, broadcast = false, peerName = '') {
             myPeerName,
             rightChatAvatar,
             'right',
-            `${icons.fileSend} File send: 
-            <br/> 
+            `${icons.fileSend} File send:
+            <br/>
             <ul>
                 <li>Name: ${fileToSend.name}</li>
                 <li>Size: ${bytesToSize(fileToSend.size)}</li>
@@ -15346,8 +15346,8 @@ function handleFileInfo(config) {
         incomingFileInfo.peer_name,
         leftChatAvatar,
         'left',
-        `${icons.fileReceive} File receive: 
-        <br/> 
+        `${icons.fileReceive} File receive:
+        <br/>
         <ul>
             <li>From: ${incomingFileInfo.peer_name}</li>
             <li>Name: ${incomingFileInfo.file.fileName}</li>
@@ -15891,7 +15891,10 @@ function leaveFeedback() {
 }
 
 function redirectOnLeave() {
-    redirectActive ? openURL(redirectURL) : openURL('/newcall');
+    // -- INSPYRE START: Redirect to landing page --
+    // redirectActive ? openURL(redirectURL) : openURL('/newcall');
+    openURL('/');
+    // -- INSPYRE END --
 }
 
 /**
