@@ -303,3 +303,11 @@ console.log('Allow Camera or Audio', {
     message: message,
 });
 if (showMessage) showMessage.innerHTML = message;
+
+// INSPYRE START: Automatically set current year in footer
+const footerYear = document.getElementById('footerYear');
+if (footerYear) {
+    const year = new Date().getFullYear();
+    footerYear.textContent = year.toString();
+}
+// INSPYRE END
