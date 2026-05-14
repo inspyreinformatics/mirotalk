@@ -497,6 +497,12 @@ footer a {
     margin-top: 4px;
     font-weight: 400;
 }
+.field > *:nth-child(odd) {
+    justify-self: start;
+}
+.field > *:nth-child(even) {
+    justify-self: end;
+}
 .text-input {
     background: var(--white);
     border: 1px solid var(--ink-20);
