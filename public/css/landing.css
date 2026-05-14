@@ -193,7 +193,6 @@ h1 em {
     color: var(--ink);
 }
 
-/* Right column hero imagery — three variants ---------------------- */
 .hero-right {
     position: relative;
     height: 620px;
