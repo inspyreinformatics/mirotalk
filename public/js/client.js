@@ -15840,7 +15840,10 @@ function showAbout() {
  * Init Exit Meeting
  */
 function initExitMeeting() {
-    openURL('/newcall');
+    // -- INSPYRE START: Redirect to landing page --
+    // openURL('/newcall');
+    openURL('/');
+    // -- INSYPRE END --
 }
 
 /**
