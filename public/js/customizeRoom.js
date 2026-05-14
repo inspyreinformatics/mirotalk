@@ -32,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const hideEl = document.getElementById('hide');
     const notifyEl = document.getElementById('notify');
 
+    // -- INSPYRE START: Query cancel and reset buttons
+    const cancelBtn = document.getElementById('crCancelButton');
+    const resetBtn = document.getElementById('crResetButton');
+    // -- INSPYRE END
+
     // Reasonable defaults (matches the screenshot: audio/video on, others off)
     if (audioEl) audioEl.checked = true;
     if (videoEl) videoEl.checked = true;
@@ -226,6 +231,29 @@ document.addEventListener('DOMContentLoaded', () => {
         document.execCommand('copy');
         document.body.removeChild(tmp);
     };
+
+    // -- INSPYRE START: Wire up "cancel" and "reset to defaults" functionality
+    const cancel = () => {
+        window.location.href = '/';
+    };
+
+    const reset = () => {
+        // Reset inputs
+        [roomEl, nameEl, avatarEl, tokenEl].forEach((it) => (it.value = ''));
+        previewEl.value = `${window.location.origin}/join?room=...`;
+        // Reset feedback fields
+        [errorEl, statusEl].filter(Boolean).forEach((it) => (it.textContent = ''));
+        // Reset inputs to true
+        [audioEl, videoEl].forEach((it) => (it.checked = true));
+        // Reset inputs to false
+        [screenEl, chatEl, hideEl, notifyEl].forEach((it) => (it.checked = false));
+        // Remove QR code
+        qrEl.innerHTML = '';
+    };
+
+    if (cancelBtn) cancelBtn.addEventListener('click', cancel);
+    if (resetBtn) resetBtn.addEventListener('click', reset);
+    // -- INSPYRE END
 
     if (!form) return;
 
