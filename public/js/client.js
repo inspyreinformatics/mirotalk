@@ -1927,7 +1927,9 @@ async function getUserName() {
 async function whoAreYou() {
     console.log('11. Who are you?');
 
-    document.body.style.background = 'var(--body-bg)';
+    // -- INSPYRE START: Don't override body background --
+    // document.body.style.background = 'var(--body-bg)';
+    // -- INSPYRE END --
 
     if (myPeerName) {
         elemDisplay(loadingDiv, false);
@@ -2010,7 +2012,9 @@ async function whoAreYou() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swBg,
+        // -- INSPYRE START: Disable custom swal background --
+        // background: swBg,
+        // -- INSPYRE END --
         title: brand.app?.name || 'MiroTalk P2P',
         position: 'center',
         input: 'text',
@@ -2018,7 +2022,7 @@ async function whoAreYou() {
         inputAttributes: { maxlength: 254, id: 'usernameInput' },
         inputValue: window.localStorage.peer_name ? window.localStorage.peer_name : '',
         html: initUser, // inject html
-        confirmButtonText: `Join meeting`,
+        confirmButtonText: `Join meeting ->`,
         customClass: { popup: 'init-modal-size' },
         showClass: { popup: 'animate__animated animate__fadeInDown' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' },
