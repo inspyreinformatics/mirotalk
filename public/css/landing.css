@@ -443,6 +443,10 @@ footer a {
         display: flex;
         flex-direction: column;
     }
+    .services span {
+        gap: 12px;
+        text-align: start;
+    }
     .services span:not(:last-child)::after {
         display: none;
     }
