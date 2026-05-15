@@ -45,6 +45,7 @@ button {
     display: flex;
     align-items: center;
     gap: 14px;
+    justify-content: center;
 }
 .brand .mono {
     width: 36px;
@@ -101,7 +102,7 @@ button {
 }
 
 h1 {
-    font-size: clamp(56px, 7.4vw, 112px);
+    font-size: clamp(46px, 7.4vw, 112px);
     line-height: 0.95;
     letter-spacing: -0.02em;
     font-weight: 400;
@@ -396,10 +397,42 @@ footer a {
     color: var(--ink);
 }
 
-.branding {
-    display: 'flex';
-    flex-direction: 'row';
-    gap: 1;
-    justify-content: center;
-    align-items: center;
+@media (max-width: 1000px) {
+    .form-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        margin: 0 32px;
+    }
+    .nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav-links,
+    .hero-right {
+        display: none;
+    }
+    .tagline {
+        font-size: 16px;
+    }
+    .hero {
+        display: block;
+    }
+    .hero,
+    .hero-left {
+        padding: 0;
+    }
+    .plate {
+        margin: 1rem 0 0 0;
+    }
+    footer {
+        margin: 0;
+        flex-direction: column;
+    }
 }
