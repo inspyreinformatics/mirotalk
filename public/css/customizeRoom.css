@@ -259,3 +259,11 @@ input:checked + .slider:before {
 input:focus + .slider {
     box-shadow: 0 0 1px var(--ink);
 }
+
+@media (max-width: 500px) {
+    .modal-foot {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
+}
