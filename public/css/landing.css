@@ -432,7 +432,25 @@ footer a {
         margin: 1rem 0 0 0;
     }
     footer {
-        margin: 0;
+        padding: 1rem 0 0 0;
         flex-direction: column;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 500px) {
+    .services {
+        display: flex;
+        flex-direction: column;
+    }
+    .services span:not(:last-child)::after {
+        display: none;
+    }
+    .services span::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        background: var(--white);
+        border-radius: 50%;
     }
 }
