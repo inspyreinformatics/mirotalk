@@ -3538,7 +3538,9 @@ function applyThemeVars(vars) {
     for (const [prop, value] of Object.entries(vars)) {
         setSP(prop, value);
     }
-    document.body.style.background = vars['--body-bg'];
+    // -- INSPYRE START: Don't apply themes --
+    // document.body.style.background = vars['--body-bg'];
+    // -- INSPYRE END --
 }
 
 /**

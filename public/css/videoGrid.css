@@ -22,7 +22,8 @@
 
 /* Video container with mouse light effect */
 #videoMediaContainer.mouse-light {
-    background:
+    /*
+  background:
         radial-gradient(
             1024px 1024px at var(--mouse-x, 50%) var(--mouse-y, 50%),
             rgba(255, 255, 255, 0.3) 0%,
@@ -35,6 +36,8 @@
         var(--body-bg, linear-gradient(135deg, #222, #444));
     background-blend-mode: multiply, normal;
     transition: background 0.2s;
+    */
+    background: rgba(0, 0, 0, 0.4);
 }
 
 #videoPinMediaContainer {
@@ -304,7 +307,7 @@
 }
 
 /*--------------------------------------------------------------
-# Peer name 
+# Peer name
 --------------------------------------------------------------*/
 
 .videoPeerName {
@@ -341,7 +344,7 @@
 }
 
 /*--------------------------------------------------------------
-# Video 
+# Video
 --------------------------------------------------------------*/
 
 .videoCircle {
