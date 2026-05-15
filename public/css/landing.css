@@ -457,4 +457,8 @@ footer a {
         background: var(--white);
         border-radius: 50%;
     }
+
+    .form input {
+        font-size: 14px;
+    }
 }
