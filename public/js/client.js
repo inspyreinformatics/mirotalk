@@ -8462,7 +8462,10 @@ function shareRoomMeetingURL(checkScreen = false) {
     playSound('newMessage');
     const roomURL = getRoomURL();
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Change background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         title: 'Share the room',
         html: renderRoomTemplate('tpl-share-room-modal', {
@@ -8472,8 +8475,12 @@ function shareRoomMeetingURL(checkScreen = false) {
         }),
         showDenyButton: true,
         showCancelButton: true,
-        cancelButtonColor: 'red',
-        denyButtonColor: 'green',
+        // -- INSPYRE START: Set button colors to --ink --
+        // cancelButtonColor: 'red',
+        cancelButtonColor: 'var(--ink)',
+        // denyButtonColor: 'green',
+        denyButtonColor: 'var(--ink)',
+        // -- INSPYRE END --
         confirmButtonText: `Copy URL`,
         denyButtonText: `Email invite`,
         cancelButtonText: `Close`,
