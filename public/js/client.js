@@ -9008,7 +9008,10 @@ function updateScreenSharingUI(isScreenStreaming, init) {
 
     isScreenStreaming
         ? setColor(init ? initScreenShareBtn : screenShareBtn, 'orange')
-        : setColor(init ? initScreenShareBtn : screenShareBtn, 'white');
+        : // -- INSPYRE START: Reset share screen button to correct color --
+          // : setColor(init ? initScreenShareBtn : screenShareBtn, 'white');
+          setColor(init ? initScreenShareBtn : screenShareBtn, init ? 'var(--ink)' : 'white');
+    // -- INSPYRE END --
 
     screenReaderAccessibility.announceMessage(isScreenStreaming ? 'Screen sharing started' : 'Screen sharing stopped');
 }
