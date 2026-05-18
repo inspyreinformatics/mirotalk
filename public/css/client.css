@@ -388,10 +388,10 @@ body {
     width: 100%;
     margin-top: 15px;
     padding: 10px;
-    background: var(--select-bg) !important;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
+    background: var(--white) !important;
+    color: var(--ink);
+    border: 1px solid var(--ink-20);
+    border-radius: 0 !important;
     box-shadow: none;
     cursor: pointer;
     transition:
@@ -401,13 +401,12 @@ body {
 }
 
 .init-user select:hover {
-    border-color: rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--ink-40);
 }
 
 .init-user select:focus {
     outline: none;
-    border-color: rgba(70, 120, 249, 0.6);
+    border-color: var(--ink-60);
     box-shadow: 0 0 0 2px rgba(70, 120, 249, 0.15);
 }
 
@@ -417,14 +416,13 @@ body {
     margin-top: 20px;
     margin-bottom: 10px;
     font-size: 1.5rem;
-    color: white;
-    border: var(--border);
-    border-radius: 8px;
-    background-color: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink-20);
+    background-color: var(--white);
 }
 
 .init-user button:hover {
-    background: var(--body-bg);
+    border-color: var(--ink-40);
 }
 
 .fa-phone-slash,
@@ -3817,6 +3815,12 @@ input:checked + .slider:before {
 # Swal2
 --------------------------------------------------------------*/
 
+.swal2-confirm {
+    border-radius: 0 !important;
+    background: var(--ink) !important;
+    color: var(--white) !important;
+}
+
 .swal2-popup {
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     /*border-radius: 20px !important;*/
@@ -3824,6 +3828,7 @@ input:checked + .slider:before {
     /*backdrop-filter: blur(12px);*/
     background: var(--ink-20);
     color: var(--ink);
+    border-radius: 0 !important;
 }
 
 .swal2-popup .swal2-styled {
@@ -3839,13 +3844,15 @@ input:checked + .slider:before {
 .swal2-content,
 .swal2-input {
     text-align: center;
-    color: white !important;
+    color: var(--ink) !important;
     background-color: transparent !important;
 }
 
 .swal2-input {
-    border: var(--border) !important;
+    border: 1px solid var(--ink-20) !important;
     box-shadow: none !important;
+    border-radius: 0 !important;
+    background: var(--white) !important;
 }
 
 .swal2-file {

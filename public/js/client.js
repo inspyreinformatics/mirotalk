@@ -2012,17 +2012,22 @@ async function whoAreYou() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        // -- INSPYRE START: Disable custom swal background --
+        // -- INSPYRE START: Set custom swal background --
         // background: swBg,
+        background: 'var(--paper)',
         // -- INSPYRE END --
-        title: brand.app?.name || 'MiroTalk P2P',
+
+        // -- INSPYRE START: Change modal title --
+        // title: brand.app?.name || 'MiroTalk P2P',
+        title: 'INSPYRE Meet',
+        // -- INSPYRE END --
         position: 'center',
         input: 'text',
         inputPlaceholder: 'Enter your email or name',
         inputAttributes: { maxlength: 254, id: 'usernameInput' },
         inputValue: window.localStorage.peer_name ? window.localStorage.peer_name : '',
         html: initUser, // inject html
-        confirmButtonText: `Join meeting ->`,
+        confirmButtonText: `Join meeting`,
         customClass: { popup: 'init-modal-size' },
         showClass: { popup: 'animate__animated animate__fadeInDown' },
         hideClass: { popup: 'animate__animated animate__fadeOutUp' },
