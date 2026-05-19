@@ -1028,7 +1028,6 @@ body {
     gap: 16px;
     padding: 20px 16px;
     border-right: none;
-    background: var(--msger-private-bg);
     overflow: visible;
 }
 
@@ -1081,7 +1080,6 @@ body {
         width: 36px;
         height: 36px;
         font-size: 0.92rem;
-        border-radius: 10px;
     }
 }
 
@@ -1110,7 +1108,6 @@ body {
         width: 32px;
         height: 32px;
         font-size: 0.84rem;
-        border-radius: 9px;
     }
 }
 
@@ -1444,9 +1441,8 @@ body {
     width: 28px;
     min-width: 28px;
     height: 28px;
-    border-radius: 9px;
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(232, 247, 249, 0.92);
+    background: var(--ink-40);
+    color: var(--ink-60);
 }
 
 .msger-participant-action-label {
@@ -1456,7 +1452,7 @@ body {
     font-size: 0.88rem;
     font-weight: 600;
     line-height: 1.25;
-    color: #fff;
+    color: var(--ink);
 }
 
 .msger-participant-action-danger .msger-participant-action-icon {
@@ -1469,7 +1465,7 @@ body {
 }
 
 .msger-participant-action-danger .msger-participant-action-label {
-    color: #ffe3df;
+    color: #f98d7f;
 }
 
 .msger-conversation-banner {
@@ -1547,7 +1543,7 @@ body {
     font-size: 1rem;
     line-height: 1;
     background: var(--paper);
-    color: var(--ink);
+    color: var(--ink) !important;
     transition: all 0.25s ease;
 }
 
@@ -1563,14 +1559,14 @@ body {
 
 .msger-header-title > button:hover,
 .msger-header-options > button:hover {
-    background: var(--right-msg-bg);
+    background: var(--white);
     transform: translateY(-1px);
 }
 
 /* Participants toggle button in header */
 .msger-header-participants-btn {
-    background: color-mix(in srgb, var(--dd-color) 15%, transparent) !important;
-    color: var(--dd-color) !important;
+    background: var(--paper);
+    color: var(--ink);
     transition:
         color 0.2s ease,
         background 0.2s ease,
@@ -1578,8 +1574,8 @@ body {
 }
 
 .msger-header-participants-btn:hover {
-    color: #fff !important;
-    background: color-mix(in srgb, var(--dd-color) 35%, transparent) !important;
+    color: var(--ink) !important;
+    background: var(--white);
     transform: translateY(-1px);
 }
 
@@ -2914,15 +2910,14 @@ button {
     align-items: center;
     flex-direction: column;
     padding: 10px;
-    background: var(--body-bg);
-    border: var(--border);
-    border-radius: 10px;
+    background: var(--paper);
+    border: 1px solid var(--ink-20);
     box-shadow: var(--box-shadow);
 }
 
 #qrText {
     margin-top: 10px;
-    color: #fff;
+    color: var(--ink);
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -3814,7 +3809,7 @@ input:checked + .slider:before {
     /*border-radius: 20px !important;*/
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
     /*backdrop-filter: blur(12px);*/
-    background: var(--ink-20);
+    background: var(--paper) !important;
     color: var(--ink);
     border-radius: 0 !important;
 }
@@ -3854,7 +3849,7 @@ input:checked + .slider:before {
 }
 
 .swal2-html-container {
-    color: rgb(195, 195, 195) !important;
+    color: var(--ink) !important;
     background-color: transparent !important;
 }
 
@@ -3875,10 +3870,10 @@ input:checked + .slider:before {
     gap: 10px;
     width: 100%;
     padding: 24px 20px;
-    border: 1px dashed rgba(255, 255, 255, 0.28);
-    border-radius: 20px;
-    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%), rgba(255, 255, 255, 0.04);
-    color: #fff;
+    border: 1px dashed var(--ink-40);
+    border-radius: 0;
+    background: var(--white);
+    color: var(--ink);
     cursor: pointer;
     transition:
         border-color 0.18s ease,
@@ -3888,13 +3883,7 @@ input:checked + .slider:before {
 
 .mirotalk-file-dropzone:hover,
 .mirotalk-file-dropzone.is-dragover {
-    border-color: var(--dd-color, #e8e8ec);
-    background:
-        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 52%),
-        color-mix(in srgb, var(--dd-color, #e8e8ec) 14%, transparent);
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.2),
-        0 18px 36px rgba(0, 0, 0, 0.2);
+    border-color: var(--ink-60);
 }
 
 .mirotalk-file-dropzone.has-file {
@@ -3921,7 +3910,7 @@ input:checked + .slider:before {
 
 .mirotalk-file-dropzone-subtitle,
 .mirotalk-file-dropzone-helper {
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--ink-40);
 }
 
 .mirotalk-file-dropzone-subtitle {
@@ -3935,9 +3924,8 @@ input:checked + .slider:before {
 .mirotalk-file-dropzone-cta {
     margin-top: 4px;
     padding: 10px 16px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    border: 1px solid var(--ink-20);
+    color: var(--ink);
     font-size: 0.9rem;
     font-weight: 600;
 }
@@ -3947,9 +3935,8 @@ input:checked + .slider:before {
     align-items: center;
     gap: 12px;
     padding: 14px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--ink-20);
+    background: var(--paper);
     text-align: left;
 }
 
@@ -3961,7 +3948,7 @@ input:checked + .slider:before {
     height: 42px;
     border-radius: 12px;
     background: color-mix(in srgb, var(--dd-color, #e8e8ec) 20%, transparent);
-    color: #fff;
+    color: var(--ink);
     flex: 0 0 auto;
 }
 
@@ -3979,28 +3966,27 @@ input:checked + .slider:before {
 }
 
 .mirotalk-file-preview-meta strong {
-    color: #fff;
+    color: var(--ink);
     font-size: 0.95rem;
 }
 
 .mirotalk-file-preview-meta span {
     margin-top: 4px;
-    color: rgba(255, 255, 255, 0.68);
+    color: var(--ink-40);
     font-size: 0.82rem;
 }
 
 .mirotalk-file-preview-remove {
-    border: none;
-    border-radius: 12px;
+    border: 1px solid var(--ink-20);
     padding: 10px 12px;
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
+    background: var(--paper);
+    color: var(--ink);
     cursor: pointer;
     transition: background 0.18s ease;
 }
 
 .mirotalk-file-preview-remove:hover {
-    background: rgba(255, 255, 255, 0.16);
+    background: var(--white);
 }
 
 @media (max-width: 640px) {
@@ -4905,7 +4891,7 @@ hr {
 .msger-room-actions-menu {
     padding: 6px;
     border: none !important;
-    border-radius: 14px;
+    border-radius: 0;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(16px);
 }
