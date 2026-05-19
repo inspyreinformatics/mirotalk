@@ -246,7 +246,6 @@ body {
     background: var(--select-bg) !important;
     padding: 6px 10px;
     border: var(--border);
-    border-radius: 8px;
     color: #fff;
 }
 
@@ -2963,10 +2962,9 @@ button {
     margin: auto;
     padding: 10px;
     width: 50%;
-    background: var(--body-bg);
+    background: var(--paper);
+    color: var(--ink);
     box-shadow: var(--box-shadow);
-    border: var(--border);
-    border-radius: 16px;
     overflow: hidden;
 }
 
@@ -3049,7 +3047,7 @@ button {
 #mySettings p {
     display: inline-flex;
     margin: auto;
-    color: #fff;
+    color: var(--ink);
     padding: 5px;
     background: transparent;
 }
@@ -3060,10 +3058,10 @@ button {
     min-width: 150px;
     max-width: 310px;
     margin-top: 10px;
-    background: var(--select-bg) !important;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
+    background: var(--white) !important;
+    color: var(--ink);
+    border-radius: 0 !important;
+    border: 1px solid var(--ink-20);
     box-shadow: none;
     cursor: pointer;
     transition:
@@ -3073,13 +3071,12 @@ button {
 }
 
 #mySettings select:hover {
-    border-color: rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--ink-40);
 }
 
 #mySettings select:focus {
     outline: none;
-    border-color: rgba(70, 120, 249, 0.6);
+    border-color: var(--ink-60);
     box-shadow: 0 0 0 2px rgba(70, 120, 249, 0.15);
 }
 
@@ -3092,16 +3089,14 @@ button {
     padding: 0;
     font-size: 1rem;
     line-height: 1;
-    color: #fff;
+    color: var(--ink-40);
     border: none;
-    border-radius: 12px;
     float: right;
-    background: var(--body-bg);
     transition: all 0.25s ease;
 }
 
 #mySettingsCloseBtn:hover {
-    background: var(--right-msg-bg);
+    color: var(--ink);
     transform: translateY(-1px);
 }
 
@@ -3112,7 +3107,7 @@ button {
 .title {
     display: inline-table;
     width: auto;
-    color: white;
+    color: var(--ink);
     font-size: 0.9rem;
     /* font-weight: bold; */
 }
@@ -3147,9 +3142,9 @@ button {
     justify-content: center;
     gap: 6px;
     padding: 10px 4px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--ink-20);
+    background: var(--paper);
+    color: var(--ink) !important;
     cursor: pointer;
     transition:
         border-color 0.25s ease,
@@ -3170,18 +3165,18 @@ button {
 
 .theme-card span {
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--ink);
     text-transform: capitalize;
 }
 
 .theme-card:hover {
     background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: var(--ink-40);
     transform: translateY(-2px);
 }
 
 .theme-card.active {
-    border-color: var(--dd-color, #66beff);
+    border-color: var(--ink-40);
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 12px rgba(102, 190, 255, 0.2);
 }
@@ -3191,7 +3186,7 @@ button {
 }
 
 .theme-card.active span {
-    color: #ffffff;
+    color: var(--ink);
 }
 
 .theme-card.disabled {
@@ -3276,7 +3271,6 @@ button {
     margin-bottom: 20px;
     width: 130px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
     background: var(--select-bg);
     color: white;
     cursor: pointer;
@@ -3308,16 +3302,16 @@ button {
     color: #fff;
     width: auto !important;
     font-size: 0.9rem;
-    border: var(--border);
-    border-radius: 10px;
-    background: var(--select-bg);
+    border: 1px solid var(--ink-20);
+    background: var(--white);
     outline: none;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .buttons:hover {
-    background-color: var(--body-bg) !important;
+    border-color: var(--ink-40);
+    background: var(--white) !important;
     transform: translateY(-3px) !important;
 }
 
@@ -3345,9 +3339,8 @@ button {
     justify-content: space-between;
     gap: 8px;
     padding: 7px 10px;
-    border-radius: 10px;
-    border: var(--border);
-    background: var(--select-bg);
+    border: 1px solid var(--ink-20);
+    background: var(--white);
     font-size: 0.82rem;
 }
 
@@ -3355,7 +3348,7 @@ button {
     display: flex;
     align-items: center;
     gap: 7px;
-    color: rgba(255, 255, 255, 0.55);
+    /*color: rgba(255, 255, 255, 0.55);*/
     white-space: nowrap;
     min-width: 70px;
 }
@@ -3395,8 +3388,8 @@ button {
     padding: 2px 9px;
     border-radius: 20px;
     background: transparent;
-    border: var(--border);
-    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--ink-20);
+    color: var(--ink);
     font-size: 0.78rem;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -3410,11 +3403,10 @@ button {
     flex: 1;
     height: 46px;
     padding: 10px;
-    border: var(--border);
-    border-radius: 8px;
+    border: 1px solid var(--ink-20);
     box-sizing: border-box;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--ink);
+    background-color: var(--white);
 }
 
 #tabRoomSecurity button {
@@ -3469,19 +3461,20 @@ button {
 #unlockRoomBtn {
     padding: 10px;
     font-size: 0.9rem;
-    border: var(--border);
-    border-radius: 8px;
-    color: #fff;
-    background-color: transparent;
+    border: 1px solid var(--ink-20);
+    color: var(--ink);
+    background-color: var(--paper);
 }
 
+#activeRoomsBtn:hover,
 #myPeerNameSetBtn:hover,
 #myProfileAvatarUploadBtn:hover,
 #myProfileAvatarResetBtn:hover,
 #roomSendEmailBtn:hover,
 #lockRoomBtn:hover,
 #unlockRoomBtn:hover {
-    background: var(--body-bg);
+    border-color: var(--ink-40);
+    background: var(--white) !important;
     transform: translateY(-3px);
     transition: all 0.3s ease-in-out;
 }
@@ -3543,10 +3536,14 @@ button {
     width: fit-content;
     flex-shrink: 0;
     box-sizing: border-box;
+    background: var(--white) !important;
+    border-radius: 0 !important;
+    border: 1px solid var(--ink-20) !important;
 }
 
 #myPeerNameSetBtn:hover {
     transform: none;
+    border-color: var(--ink-40) !important;
 }
 
 /*--------------------------------------------------------------
@@ -3555,11 +3552,10 @@ button {
 
 #mySettingsTable {
     width: 100%;
-    color: #fff;
+    color: var(--ink);
     table-layout: auto;
     border-collapse: collapse;
-    border-radius: 10px;
-    background: var(--body-bg);
+    border: 1px solid var(--ink-20);
 }
 
 #mySettingsTable td,
@@ -3585,7 +3581,6 @@ button {
 
 #mySettingsTable i {
     border: none;
-    border-radius: 8px;
 }
 
 #mySettingsTable select {
@@ -3602,9 +3597,9 @@ button {
     margin: 20px 0;
     font-size: 16px;
     text-align: left;
-    color: #fff;
-    border-radius: 10px;
-    background: var(--body-bg);
+    color: var(--ink);
+    border: 1px solid var(--ink-20);
+    background: var(--paper);
 }
 #shortcutsTable th,
 #shortcutsTable td {
@@ -3612,14 +3607,14 @@ button {
     /* border: var(--border); */
 }
 #shortcutsTable th {
-    background: var(--body-bg);
+    background: var(--white);
     font-weight: bold;
 }
 #shortcutsTable td i {
-    color: #007bff;
+    color: var(--ink);
 }
 #shortcutsTable tr:nth-child(even) {
-    background: var(--body-bg);
+    background: var(--white);
 }
 
 /*--------------------------------------------------------------
@@ -3675,11 +3670,10 @@ button {
     padding: 11px;
     float: left;
     text-align: left;
-    color: #fff;
     font-size: 1rem;
-    border: var(--border);
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--ink-20);
+    background: var(--ink-10);
+    color: var(--ink);
     outline: none;
     cursor: pointer;
     transition: 0.3s;
@@ -3687,13 +3681,17 @@ button {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-    background: var(--body-bg);
+    border-color: var(--ink-40);
     transform: translateY(-3px);
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-    background-color: var(--tab-btn-active);
+    background-color: var(--white);
+}
+
+.tab .mybold {
+    font-weight: 900;
 }
 
 /* Style the tab content */
@@ -4741,7 +4739,7 @@ hr {
     outline: none;
     border: var(--border);
     cursor: pointer;
-    background-color: #000000;
+    background-color: var(--ink-20);
     transition: background-color ease 0.3s;
 }
 
@@ -4769,7 +4767,7 @@ hr {
 }
 
 .toggle:checked {
-    background-color: green;
+    background-color: var(--ink);
 }
 
 .toggle:checked:before {
@@ -5124,6 +5122,10 @@ hr {
     background: var(--select-bg);
     transform: scale(0.95);
     transition: all 0.3s ease-in-out;
+}
+
+#labelNoiseSuppression {
+    color: var(--ink) !important;
 }
 
 /*--------------------------------------------------------------

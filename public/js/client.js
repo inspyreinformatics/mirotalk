@@ -15472,7 +15472,10 @@ function sendVideoUrl(peer_id = null, peer_name = '', broadcast = !peer_id) {
     const targetLabel = !broadcast && targetPeerName ? ` with ${targetPeerName}` : '';
 
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set modal background to --paper --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         imageUrl: images.vaShare,
         title: `Share a Video or Audio${targetLabel}`,
