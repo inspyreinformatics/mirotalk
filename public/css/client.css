@@ -458,7 +458,6 @@ body {
     justify-content: center;
     gap: 0.5rem;
     margin-bottom: var(--bottom-btns-margin-bottom);
-    border-radius: 10px;
     border: none !important;
     box-shadow: var(--box-shadow);
 }
@@ -480,19 +479,11 @@ body {
 }
 
 #bottomButtons .split-btn > button {
-    border-radius: 0;
     margin: 0;
-}
-
-#bottomButtons .split-btn > button:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
 }
 
 #bottomButtons .split-btn .device-dropdown-toggle {
     border-radius: 0;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
     border-left: var(--border);
     margin: 0;
 }
@@ -510,7 +501,6 @@ body {
     color: var(--btn-bar-bg-color);
     background: var(--btns-bg-color);
     border: none !important;
-    border-radius: 10px;
     transition: all 0.3s ease-in-out;
 }
 
@@ -532,7 +522,6 @@ body {
     width: auto;
     font-size: 0.8em;
     padding: 8px 16px;
-    border-radius: 8px;
     background: none;
     transition:
         background 0.2s ease,
@@ -553,9 +542,10 @@ body {
     left: 0;
     padding: 8px;
     bottom: 45px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    background: var(--body-bg);
+    border: 1px solid var(--ink-20);
+    border-radius: 0 !important;
+    color: var(--ink);
+    background: var(--paper);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(12px);
 }
@@ -577,7 +567,6 @@ body {
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.4);
     padding: 10px 16px 4px;
     pointer-events: none;
     user-select: none;
@@ -644,7 +633,7 @@ body {
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
-    color: #fff;
+    color: var(--ink);
     font-weight: 600;
     font-size: 1rem;
     font-weight: 600;
@@ -662,7 +651,7 @@ body {
 #bottomButtons #audioMenu .device-menu-divider,
 #bottomButtons #settingsExtraMenu .device-menu-divider {
     height: 1px;
-    background: var(--btns-bg-color);
+    background: var(--paper);
     opacity: 0.6;
     margin: 8px 0;
 }
@@ -671,9 +660,9 @@ body {
 #bottomButtons #audioMenu .device-menu-action-btn,
 #bottomButtons #videoMenu .device-menu-action-btn,
 #bottomButtons #settingsExtraMenu .device-menu-action-btn {
-    background: var(--body-bg);
-    border: 1px solid var(--border-color);
-    color: #fff;
+    background: var(--white);
+    border: 1px solid var(--ink-20);
+    color: var(--ink) !important;
     font-weight: 500;
     gap: 8px;
     transition: all 0.2s ease;
@@ -682,8 +671,8 @@ body {
 #bottomButtons #audioMenu .device-menu-action-btn:hover,
 #bottomButtons #videoMenu .device-menu-action-btn:hover,
 #bottomButtons #settingsExtraMenu .device-menu-action-btn:hover {
-    background: var(--btns-bg-color) !important;
-    border-color: var(--btns-color);
+    background: var(--white) !important;
+    border-color: var(--ink-40);
     transform: translateY(-1px) !important;
 }
 
@@ -4860,16 +4849,16 @@ hr {
     text-align: left;
     border: none !important;
     background: none;
-    color: #fff;
+    color: var(--ink) !important;
     cursor: pointer;
-    border-radius: 10px;
     font-size: 0.88rem;
     line-height: 1.35;
     transition: background 0.2s ease;
 }
 
 .app-dropdown-action:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--ink-20) !important;
+    border: 1px solid var(--ink-40) !important;
 }
 
 .dropdown-menu-custom {

@@ -110,8 +110,7 @@
     font-size: 1.2rem;
     text-decoration: none;
     border: none;
-    border-radius: 10px;
-    background: var(--body-bg);
+    background: var(--ink);
     color: #fff;
     margin: 3px;
     flex-shrink: 0;
