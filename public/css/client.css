@@ -651,7 +651,7 @@ body {
 #bottomButtons #audioMenu .device-menu-divider,
 #bottomButtons #settingsExtraMenu .device-menu-divider {
     height: 1px;
-    background: var(--paper);
+    background: var(--ink-20);
     opacity: 0.6;
     margin: 8px 0;
 }
