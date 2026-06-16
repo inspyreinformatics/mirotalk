@@ -1,9 +1,9 @@
 /*
  ██████ ██      ██ ███████ ███    ██ ████████ 
 ██      ██      ██ ██      ████   ██    ██    
-██      ██      ██ █████   ██ ██  ██    ██    
-██      ██      ██ ██      ██  ██ ██    ██    
- ██████ ███████ ██ ███████ ██   ████    ██   
+██      ██      ██ █████   ██ ██  ██    ██ 
+██      ██      ██ ██      ██  ██ ██    ██ 
+ ██████ ███████ ██ ███████ ██   ████    ██ 
 */
 
 /**
@@ -1117,7 +1117,10 @@ function getRoomDuration() {
         setTimeout(() => {
             playSound('eject');
             Swal.fire({
-                background: swBg,
+                // -- INSPYRE START: Set custom background color --
+                // background: swBg,
+                background: 'var(--paper)',
+                // -- INSPYRE END --
                 position: 'center',
                 title: 'Time Limit Reached',
                 text: 'The room has reached its time limit and will close shortly',
@@ -1590,7 +1593,10 @@ function handleUnauthorized() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         imageUrl: images.forbidden,
         title: 'Ops, Unauthorized',
         text: 'The host has user authentication enabled',
@@ -1613,7 +1619,10 @@ function roomIsBusy() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         imageUrl: images.forbidden,
         position: 'center',
         title: 'Room is busy',
@@ -1927,7 +1936,9 @@ async function getUserName() {
 async function whoAreYou() {
     console.log('11. Who are you?');
 
-    document.body.style.background = 'var(--body-bg)';
+    // -- INSPYRE START: Don't override body background --
+    // document.body.style.background = 'var(--body-bg)';
+    // -- INSPYRE END --
 
     if (myPeerName) {
         elemDisplay(loadingDiv, false);
@@ -2010,8 +2021,15 @@ async function whoAreYou() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swBg,
-        title: brand.app?.name || 'MiroTalk P2P',
+        // -- INSPYRE START: Set custom swal background --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
+
+        // -- INSPYRE START: Change modal title --
+        // title: brand.app?.name || 'MiroTalk P2P',
+        title: 'INSPYRE Meet',
+        // -- INSPYRE END --
         position: 'center',
         input: 'text',
         inputPlaceholder: 'Enter your email or name',
@@ -2131,7 +2149,10 @@ function userNameAlreadyInRoom() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         imageUrl: images.forbidden,
         position: 'center',
         title: 'Username',
@@ -3538,7 +3559,9 @@ function applyThemeVars(vars) {
     for (const [prop, value] of Object.entries(vars)) {
         setSP(prop, value);
     }
-    document.body.style.background = vars['--body-bg'];
+    // -- INSPYRE START: Don't apply themes --
+    // document.body.style.background = vars['--body-bg'];
+    // -- INSPYRE END --
 }
 
 /**
@@ -4006,7 +4029,7 @@ async function setupLocalAudioMedia() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia(audioConstraints);
         if (stream) {
-            /* 
+            /*
                 Verify the audio track is live – on some mobile devices getUserMedia
                 succeeds but the track is muted/ended (e.g. built-in mic restrictions).
             */
@@ -4090,7 +4113,7 @@ function handleMediaError(mediaType, err) {
     msgHTML(null, images.forbidden, 'Access denied', $html, 'center', '/');
 
     /*
-        it immediately stops the execution of the current function and jumps to the nearest enclosing try...catch block or, 
+        it immediately stops the execution of the current function and jumps to the nearest enclosing try...catch block or,
         if none exists, it interrupts the script execution and displays an error message in the console.
     */
     throw new Error(
@@ -4514,7 +4537,10 @@ function checkShareScreen() {
         // screenShareBtn.click(); // Chrome - Opera - Edge - Brave
         // handle error: getDisplayMedia requires transient activation from a user gesture on Safari - FireFox
         Swal.fire({
-            background: swBg,
+            // -- INSPYRE START: Set custom background color --
+            // background: swBg,
+            background: 'var(--paper)',
+            // -- INSPYRE END --
             position: 'center',
             icon: 'question',
             text: 'Do you want to share your screen?',
@@ -5378,31 +5404,31 @@ function genAvatarSvg(peerName, avatarImgSize) {
     const bgColor = `rgb(${red}, ${green}, ${blue})`;
     const textColor = '#ffffff';
     const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    width="${avatarImgSize}px" 
-    height="${avatarImgSize}px" 
-    viewBox="0 0 ${avatarImgSize} ${avatarImgSize}" 
+    <svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="${avatarImgSize}px"
+    height="${avatarImgSize}px"
+    viewBox="0 0 ${avatarImgSize} ${avatarImgSize}"
     version="1.1">
-        <circle 
-            fill="${bgColor}" 
-            width="${avatarImgSize}" 
-            height="${avatarImgSize}" 
-            cx="${avatarImgSize / 2}" 
-            cy="${avatarImgSize / 2}" 
+        <circle
+            fill="${bgColor}"
+            width="${avatarImgSize}"
+            height="${avatarImgSize}"
+            cx="${avatarImgSize / 2}"
+            cy="${avatarImgSize / 2}"
             r="${avatarImgSize / 2}"/>
-        <text 
-            x="50%" 
-            y="50%" 
+        <text
+            x="50%"
+            y="50%"
             style="color:${textColor};
             line-height:1;
-            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif" 
-            alignment-baseline="middle" 
-            text-anchor="middle" 
-            font-size="${Math.round(avatarImgSize * 0.4)}" 
-            font-weight="normal" 
-            dy=".1em" 
-            dominant-baseline="middle" 
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"
+            alignment-baseline="middle"
+            text-anchor="middle"
+            font-size="${Math.round(avatarImgSize * 0.4)}"
+            font-weight="normal"
+            dy=".1em"
+            dominant-baseline="middle"
             fill="${textColor}">${peerName.substring(0, 2).toUpperCase()}
         </text>
     </svg>`;
@@ -8128,7 +8154,7 @@ function getAudioConstraints(deviceId = null) {
         autoGainControl: isMobileDevice ? { ideal: true } : true,
         noiseSuppression: useBuiltInNoiseSuppression,
     };
-    /* 
+    /*
     deviceId handling is platform-dependent:
         - iOS Safari: routing is OS-controlled; ignore deviceId.
         - Mobile (Android): best-effort with `ideal`.
@@ -8432,7 +8458,7 @@ async function shareRoomUrl() {
             /*
             This feature is available only in secure contexts (HTTPS),
             in some or all supporting browsers and mobile devices
-            console.error("navigator.share", err); 
+            console.error("navigator.share", err);
             */
             console.error('Navigator share error', err);
 
@@ -8451,7 +8477,10 @@ function shareRoomMeetingURL(checkScreen = false) {
     playSound('newMessage');
     const roomURL = getRoomURL();
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Change background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         title: 'Share the room',
         html: renderRoomTemplate('tpl-share-room-modal', {
@@ -8461,8 +8490,12 @@ function shareRoomMeetingURL(checkScreen = false) {
         }),
         showDenyButton: true,
         showCancelButton: true,
-        cancelButtonColor: 'red',
-        denyButtonColor: 'green',
+        // -- INSPYRE START: Set button colors to --ink --
+        // cancelButtonColor: 'red',
+        cancelButtonColor: 'var(--ink)',
+        // denyButtonColor: 'green',
+        denyButtonColor: 'var(--ink)',
+        // -- INSPYRE END --
         confirmButtonText: `Copy URL`,
         denyButtonText: `Email invite`,
         cancelButtonText: `Close`,
@@ -8530,7 +8563,10 @@ function shareRoomByEmail() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         imageUrl: images.message,
         position: 'center',
         title: 'Select a Date and Time',
@@ -8997,7 +9033,10 @@ function updateScreenSharingUI(isScreenStreaming, init) {
 
     isScreenStreaming
         ? setColor(init ? initScreenShareBtn : screenShareBtn, 'orange')
-        : setColor(init ? initScreenShareBtn : screenShareBtn, 'white');
+        : // -- INSPYRE START: Reset share screen button to correct color --
+          // : setColor(init ? initScreenShareBtn : screenShareBtn, 'white');
+          setColor(init ? initScreenShareBtn : screenShareBtn, init ? 'var(--ink)' : 'white');
+    // -- INSPYRE END --
 
     screenReaderAccessibility.announceMessage(isScreenStreaming ? 'Screen sharing started' : 'Screen sharing stopped');
 }
@@ -9463,7 +9502,10 @@ function startStreamRecording() {
  */
 function recordingOptions(options, audioMixerTracks) {
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'top',
         imageUrl: images.recording,
         title: 'Recording options',
@@ -10344,7 +10386,10 @@ function captionPinned() {
 function cleanMessages() {
     playSound('newMessage');
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'top',
         title: 'Chat',
         text: 'Clean up chat messages?',
@@ -10377,7 +10422,10 @@ function cleanMessages() {
 function cleanCaptions() {
     playSound('newMessage');
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'top',
         title: 'Clean up all caption transcripts?',
         imageUrl: images.delete,
@@ -10902,7 +10950,7 @@ function appendMessage(from, img, side, msg, privateMsg, msgId = null, to = '') 
                 ></button>
                 <button
                     id="msg-copy-${chatMessagesId}"
-                    class="${className.copy}" 
+                    class="${className.copy}"
                     style="color:#fff; border:none; background:transparent;"
                     onclick="copyToClipboard('message-${chatMessagesId}')"
                 ></button>`;
@@ -10917,7 +10965,7 @@ function appendMessage(from, img, side, msg, privateMsg, msgId = null, to = '') 
         messageActionsHTML += `
                 <button
                     id="msg-speech-${chatMessagesId}"
-                    class="${className.speech}" 
+                    class="${className.speech}"
                     style="color:#fff; border:none; background:transparent;"
                     onclick="speechElementText(false, '${getFrom}', 'message-${chatMessagesId}')"
                 ></button>`;
@@ -11324,7 +11372,10 @@ function speechElementText(newMsg = true, from, elemId) {
 function deleteMessage(id) {
     playSound('newMessage');
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'top',
         title: 'Chat',
         text: 'Delete this messages?',
@@ -12333,7 +12384,10 @@ async function updateMyPeerName() {
  */
 async function updateMyPeerAvatarByUrl() {
     const result = await Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         title: 'Set avatar URL',
         input: 'url',
         inputLabel: 'Public image URL',
@@ -13368,7 +13422,10 @@ function disableAllPeers(element) {
         return toastMessage('info', 'No participants detected', '', 'top');
     }
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'top',
         imageUrl: element == 'audio' ? images.audioOff : images.videoOff,
         title: element == 'audio' ? 'Mute everyone except yourself?' : 'Hide everyone except yourself?',
@@ -13407,7 +13464,10 @@ function ejectEveryone() {
         return toastMessage('info', 'No participants detected', '', 'top');
     }
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         imageUrl: images.leave,
         position: 'center',
         title: 'Eject everyone except yourself?',
@@ -13466,7 +13526,10 @@ function disablePeer(peer_id, element) {
     }
 
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'top',
         imageUrl: imageUrl,
         title: title,
@@ -13522,7 +13585,10 @@ function handleRoomAction(config, emit = false) {
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showDenyButton: true,
-                    background: swBg,
+                    // -- INSPYRE START: Set custom background color --
+                    // background: swBg,
+                    background: 'var(--paper)',
+                    // -- INSPYRE END --
                     imageUrl: images.locked,
                     input: 'text',
                     inputPlaceholder: 'Set Room password',
@@ -13596,7 +13662,10 @@ function handleRoomLocked() {
     console.log('Room is Locked, try with another one');
     Swal.fire({
         allowOutsideClick: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         imageUrl: images.locked,
         title: 'Oops, Wrong Room Password',
@@ -13619,7 +13688,10 @@ function handleUnlockTheRoom() {
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         imageUrl: images.locked,
         title: 'Oops, Room is Locked',
         input: 'text',
@@ -13943,7 +14015,10 @@ function whiteboardAddObj(type) {
     switch (type) {
         case 'imgUrl':
             Swal.fire({
-                background: swBg,
+                // -- INSPYRE START: Set custom background color --
+                // background: swBg,
+                background: 'var(--paper)',
+                // -- INSPYRE END --
                 title: 'Image URL',
                 input: 'text',
                 showCancelButton: true,
@@ -14123,7 +14198,10 @@ function wbHandleVanishingObjects() {
  */
 function createStickyNote() {
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         title: 'Create Sticky Note',
         html: renderRoomTemplate('tpl-sticky-note-form'),
         showCancelButton: true,
@@ -14248,7 +14326,10 @@ async function openFilePickerModal(config) {
 
     const result = await Swal.fire({
         allowOutsideClick: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         title: title,
         input: 'file',
@@ -14760,7 +14841,10 @@ function confirmCleanBoard() {
     playSound('newMessage');
 
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         imageUrl: images.delete,
         position: 'top',
         title: 'Clean the board',
@@ -14865,7 +14949,10 @@ function showWhiteboardShortcuts() {
         return;
     }
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         title: 'Whiteboard Shortcuts',
         html: whiteboardShortcutsContent.innerHTML,
@@ -15282,8 +15369,8 @@ function sendFileInformations(file, peer_id, broadcast = false, peerName = '') {
             myPeerName,
             rightChatAvatar,
             'right',
-            `${icons.fileSend} File send: 
-            <br/> 
+            `${icons.fileSend} File send:
+            <br/>
             <ul>
                 <li>Name: ${fileToSend.name}</li>
                 <li>Size: ${bytesToSize(fileToSend.size)}</li>
@@ -15346,8 +15433,8 @@ function handleFileInfo(config) {
         incomingFileInfo.peer_name,
         leftChatAvatar,
         'left',
-        `${icons.fileReceive} File receive: 
-        <br/> 
+        `${icons.fileReceive} File receive:
+        <br/>
         <ul>
             <li>From: ${incomingFileInfo.peer_name}</li>
             <li>Name: ${incomingFileInfo.file.fileName}</li>
@@ -15382,7 +15469,10 @@ function endDownload() {
         reader.onload = (e) => {
             Swal.fire({
                 allowOutsideClick: false,
-                background: swBg,
+                // -- INSPYRE START: Set custom background color --
+                // background: swBg,
+                background: 'var(--paper)',
+                // -- INSPYRE END --
                 position: 'center',
                 title: 'Received file',
                 text: incomingFileInfo.file.fileName + ' size ' + bytesToSize(incomingFileInfo.file.fileSize),
@@ -15403,7 +15493,10 @@ function endDownload() {
         // not img file
         Swal.fire({
             allowOutsideClick: false,
-            background: swBg,
+            // -- INSPYRE START: Set custom background color --
+            // background: swBg,
+            background: 'var(--paper)',
+            // -- INSPYRE END --background: swBg,
             imageAlt: 'mirotalk-file-download',
             imageUrl: images.share,
             position: 'center',
@@ -15451,7 +15544,10 @@ function sendVideoUrl(peer_id = null, peer_name = '', broadcast = !peer_id) {
     const targetLabel = !broadcast && targetPeerName ? ` with ${targetPeerName}` : '';
 
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set modal background to --paper --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         imageUrl: images.vaShare,
         title: `Share a Video or Audio${targetLabel}`,
@@ -15678,7 +15774,10 @@ function kickOut(peer_id) {
     const pName = getId(peer_id + '_name').innerText;
 
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'top',
         imageUrl: images.leave,
         title: 'Kick out',
@@ -15724,7 +15823,10 @@ function handleCaptionActions(config) {
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 showDenyButton: true,
-                background: swBg,
+                // -- INSPYRE START: Set custom background color --
+                // background: swBg,
+                background: 'var(--paper)',
+                // -- INSPYRE END --
                 imageUrl: images.caption,
                 title: 'Start Captions',
                 text: `${peer_name} wants to start the captions for this session. Would you like to enable them?`,
@@ -15780,7 +15882,10 @@ function handleKickedOut(config) {
 
     Swal.fire({
         allowOutsideClick: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         imageUrl: images.leave,
         title: 'Kicked out!',
@@ -15821,7 +15926,10 @@ function showAbout() {
     const aboutHtml = brand.about.html;
 
     Swal.fire({
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         position: 'center',
         title: brand.about?.title && brand.about.title.trim() !== '' ? brand.about.title : 'WebRTC P2P v1.8.34',
         imageUrl: brand.about?.imageUrl && brand.about.imageUrl.trim() !== '' ? brand.about.imageUrl : images.about,
@@ -15840,7 +15948,10 @@ function showAbout() {
  * Init Exit Meeting
  */
 function initExitMeeting() {
-    openURL('/newcall');
+    // -- INSPYRE START: Redirect to landing page --
+    // openURL('/newcall');
+    openURL('/');
+    // -- INSYPRE END --
 }
 
 /**
@@ -15871,7 +15982,10 @@ function leaveFeedback() {
         confirmButtonColor: 'green',
         denyButtonColor: 'red',
         cancelButtonColor: 'gray',
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --
         imageUrl: images.feedback,
         position: 'top',
         title: 'Leave a feedback',
@@ -15891,7 +16005,10 @@ function leaveFeedback() {
 }
 
 function redirectOnLeave() {
-    redirectActive ? openURL(redirectURL) : openURL('/newcall');
+    // -- INSPYRE START: Redirect to landing page --
+    // redirectActive ? openURL(redirectURL) : openURL('/newcall');
+    openURL('/');
+    // -- INSPYRE END --
 }
 
 /**
@@ -16124,7 +16241,10 @@ function userLog(type, message, timer = 3000) {
         case 'warning':
         case 'error':
             Swal.fire({
-                background: swBg,
+                // -- INSPYRE START: Set custom background color --
+                // background: swBg,
+                background: 'var(--paper)',
+                // -- INSPYRE END --
                 position: 'center',
                 icon: type,
                 title: type,
@@ -16137,7 +16257,10 @@ function userLog(type, message, timer = 3000) {
         case 'info':
         case 'success':
             Swal.fire({
-                background: swBg,
+                // -- INSPYRE START: Set custom background color --
+                // background: swBg,
+                background: 'var(--paper)',
+                // -- INSPYRE END --
                 position: 'center',
                 icon: type,
                 title: type,
@@ -16148,7 +16271,10 @@ function userLog(type, message, timer = 3000) {
             break;
         case 'success-html':
             Swal.fire({
-                background: swBg,
+                // -- INSPYRE START: Set custom background color --
+                // background: swBg,
+                background: 'var(--paper)',
+                // -- INSPYRE END --
                 position: 'center',
                 icon: 'success',
                 title: 'Success',
@@ -16159,7 +16285,10 @@ function userLog(type, message, timer = 3000) {
             break;
         case 'toast':
             const Toast = Swal.mixin({
-                background: swBg,
+                // -- INSPYRE START: Set custom background color --
+                // background: swBg,
+                background: 'var(--paper)',
+                // -- INSPYRE END --
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
@@ -16222,7 +16351,10 @@ function msgHTML(icon, imageUrl, title, html, position = 'center', redirectURL =
     Swal.fire({
         allowOutsideClick: false,
         allowEscapeKey: false,
-        background: swBg,
+        // -- INSPYRE START: Set custom background color --
+        // background: swBg,
+        background: 'var(--paper)',
+        // -- INSPYRE END --,
         position: position,
         icon: icon,
         imageUrl: imageUrl,

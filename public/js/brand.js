@@ -111,24 +111,24 @@ let brand = {
         imageUrl: '../images/mirotalk-logo.gif',
         title: 'WebRTC P2P v1.8.34',
         html: `
-            <button 
-                id="support-button" 
-                data-umami-event="Support button" 
+            <button
+                id="support-button"
+                data-umami-event="Support button"
                 onclick="window.open('https://codecanyon.net/user/miroslavpejic85')">
                 <i class="fas fa-heart" ></i>&nbsp;Support
             </button>
             <br /><br /><br />
-            Author:<a 
-                id="linkedin-button" 
-                data-umami-event="Linkedin button" 
-                href="https://www.linkedin.com/in/miroslav-pejic-976a07101/" target="_blank"> 
+            Author:<a
+                id="linkedin-button"
+                data-umami-event="Linkedin button"
+                href="https://www.linkedin.com/in/miroslav-pejic-976a07101/" target="_blank">
                 Miroslav Pejic
             </a>
             <br /><br />
-            Email:<a 
-                id="email-button" 
-                data-umami-event="Email button" 
-                href="mailto:miroslav.pejic.85@gmail.com?subject=MiroTalk P2P info"> 
+            Email:<a
+                id="email-button"
+                data-umami-event="Email button"
+                href="mailto:miroslav.pejic.85@gmail.com?subject=MiroTalk P2P info">
                 miroslav.pejic.85@gmail.com
             </a>
             <br /><br />
@@ -283,9 +283,16 @@ function handleBrand() {
     if (appTitle && brand.app?.title) appTitle.innerHTML = brand.app.title;
     if (appDescription && brand.app?.description) appDescription.textContent = brand.app.description;
     if (appJoinDescription && brand.app?.joinDescription) appJoinDescription.innerHTML = brand.app.joinDescription;
-    if (joinRoomBtn && brand.app?.joinButtonLabel) joinRoomBtn.innerText = brand.app.joinButtonLabel;
+    // -- INSPYRE START: Don't set join room button label
+    // if (joinRoomBtn && brand.app?.joinButtonLabel) joinRoomBtn.innerText = brand.app.joinButtonLabel;
+    // -- INSPYRE END --
+
+    // -- INSPYRE START: Don't set customize room button label
+    /*
     if (customizeRoomBtn && brand.app?.customizeRoomButtonLabel)
         customizeRoomBtn.innerText = brand.app.customizeRoomButtonLabel;
+    */
+    // -- INSPYRE END --
     if (appJoinLastRoom && brand.app?.joinLastLabel) appJoinLastRoom.innerText = brand.app.joinLastLabel;
 
     // helper to toggle multiple elements

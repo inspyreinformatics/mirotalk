@@ -22,7 +22,8 @@
 
 /* Video container with mouse light effect */
 #videoMediaContainer.mouse-light {
-    background:
+    /*
+  background:
         radial-gradient(
             1024px 1024px at var(--mouse-x, 50%) var(--mouse-y, 50%),
             rgba(255, 255, 255, 0.3) 0%,
@@ -35,6 +36,8 @@
         var(--body-bg, linear-gradient(135deg, #222, #444));
     background-blend-mode: multiply, normal;
     transition: background 0.2s;
+    */
+    background: rgba(0, 0, 0, 0.4);
 }
 
 #videoPinMediaContainer {
@@ -107,8 +110,7 @@
     font-size: 1.2rem;
     text-decoration: none;
     border: none;
-    border-radius: 10px;
-    background: var(--body-bg);
+    background: var(--ink);
     color: #fff;
     margin: 3px;
     flex-shrink: 0;
@@ -246,9 +248,8 @@
     position: fixed;
     z-index: 9999;
     min-width: 180px;
-    background: var(--body-bg);
-    border-radius: 10px;
-    border: var(--border);
+    background: var(--paper);
+    border: 1px solid var(--ink-20);
     padding: 6px 0;
     box-shadow: var(--box-shadow);
     max-height: 70vh;
@@ -264,7 +265,7 @@
     align-items: center;
     gap: 10px;
     padding: 8px 14px;
-    color: #fff;
+    color: var(--ink);
     font-size: 0.85rem;
     cursor: pointer;
     white-space: nowrap;
@@ -272,7 +273,7 @@
 }
 
 .navbar-dropdown-item:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--white);
 }
 
 .navbar-dropdown-item button,
@@ -281,7 +282,7 @@
     pointer-events: none;
     background: none !important;
     border: none !important;
-    color: #fff !important;
+    color: var(--ink) !important;
     font-size: 1rem !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -304,7 +305,7 @@
 }
 
 /*--------------------------------------------------------------
-# Peer name 
+# Peer name
 --------------------------------------------------------------*/
 
 .videoPeerName {
@@ -341,7 +342,7 @@
 }
 
 /*--------------------------------------------------------------
-# Video 
+# Video
 --------------------------------------------------------------*/
 
 .videoCircle {
